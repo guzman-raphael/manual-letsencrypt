@@ -1,0 +1,34 @@
+# docker-compose up -d --build
+version: '2.4'
+services:     
+  letsencrypt:
+    image: linuxserver/letsencrypt:amd64-0.38.0-ls62
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - EMAIL=admin@vathes.com
+      - URL=datajoint.io
+      - SUBDOMAINS=sfn2019
+      - TZ=Europe/London
+      - ONLY_SUBDOMAINS=true
+      - STAGING=true # UNcomment for testdev
+      - VALIDATION=http
+    healthcheck:
+      # test: ["CMD-SHELL","if","[", "$$(expr", "$$(date", "+%s)","-","$$(stat","-c","%Y","$$(ls","-la","/config/etc/letsencrypt/live/*.*/fullchain.pem","|","awk","'{print","sprintf(\"%s/%s\",\"/config/etc/letsencrypt/live/*.*\",$$11)}')))","-lt","\"7776000\"","];","then","exit","0;else","exit","1;fi"]
+      # test: if [ $$(expr $(date +%s) - $$(stat -c %Y $(ls -la /config/etc/letsencrypt/live/*.*/fullchain.pem | awk '{print sprintf("%s/%s", "/config/etc/letsencrypt/live/*.*", $11)}'))) -lt "7776000" ]; then exit 0;else exit 1;fi
+      test: /healthcheck.sh
+      timeout: 5s
+      retries: 300
+      interval: 1s
+    # ports:
+    #   - "80:80"
+    #   - "443:443"
+    # cap_add:
+    #   - NET_ADMIN
+    volumes:
+      - ./letsencrypt-keys:/config/etc/letsencrypt
+      - ./letsencrypt/healthcheck.sh:/healthcheck.sh
+    networks:
+      - main
+networks:
+    main:
