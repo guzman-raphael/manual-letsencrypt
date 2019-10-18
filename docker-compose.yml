@@ -20,8 +20,8 @@ services:
       timeout: 5s
       retries: 300
       interval: 1s
-    # ports:
-    #   - "80:80"
+    ports:
+      - "80:80"
     #   - "443:443"
     # cap_add:
     #   - NET_ADMIN
