@@ -26,6 +26,8 @@ services:
     # cap_add:
     #   - NET_ADMIN
     volumes:
+      # key=letsencrypt-keys/live/domain/privkey.pem
+      # cert=letsencrypt-keys/live/domain/cert.pem
       - ./letsencrypt-keys:/config/etc/letsencrypt
       - ./letsencrypt/healthcheck.sh:/healthcheck.sh
     networks:
