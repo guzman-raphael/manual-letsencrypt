@@ -6,12 +6,12 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - EMAIL=admin@vathes.com
+      - EMAIL=service-health@vathes.com
       - URL=datajoint.io
-      - SUBDOMAINS=fakeminio
+      - SUBDOMAINS=fakeservices
       - TZ=Europe/London
       - ONLY_SUBDOMAINS=true
-      - STAGING=true # UNcomment for testdev
+      #- STAGING=true # UNcomment for testdev
       - VALIDATION=http
     healthcheck:
       # test: ["CMD-SHELL","if","[", "$$(expr", "$$(date", "+%s)","-","$$(stat","-c","%Y","$$(ls","-la","/config/etc/letsencrypt/live/*.*/fullchain.pem","|","awk","'{print","sprintf(\"%s/%s\",\"/config/etc/letsencrypt/live/*.*\",$$11)}')))","-lt","\"7776000\"","];","then","exit","0;else","exit","1;fi"]
