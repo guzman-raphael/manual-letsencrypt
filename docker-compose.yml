@@ -6,7 +6,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - EMAIL=service-health@vathes.com
+      - EMAIL=notify@example.com
       - URL=datajoint.io
       - SUBDOMAINS=fakeservices
       - TZ=Europe/London
